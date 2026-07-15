@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Projects | Vorqex Project</title>
+  <meta name="description" content="Explore the portfolio of Vorqex Project, a modern digital agency. Discover our work in Web Apps, Branding, E-Commerce, and Web Design.">
+  
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Alpine.js CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            obsidian: {
+              DEFAULT: '#0B0F19',
+              light: '#161D2F',
+              accent: '#232D48',
+            },
+          },
+          animation: {
+            'text-shimmer': 'text-shimmer 2.5s ease-out infinite alternate',
+            'spin-slow': 'spin 12s linear infinite',
+          },
+          keyframes: {
+            'text-shimmer': {
+              '0%': { backgroundPosition: '0% 50%' },
+              '100%': { backgroundPosition: '100% 50%' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0F19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-nav {
+      background: rgba(11, 15, 25, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-card {
+      background: rgba(22, 29, 47, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-modal {
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Glow Hover Animations */
+    .glow-card {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glow-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.3), 
+                  0 0 20px -5px rgba(139, 92, 246, 0.2);
+    }
+
+    /* Custom Animated Background blobs */
+    .bg-blob {
+      filter: blur(100px);
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="bg-obsidian text-slate-100 font-sans min-h-screen overflow-x-hidden relative"
+      x-data="{
+        activeTab: 'All',
+        selectedProject: null,
+        isModalOpen: false,
+        projects: [
+          {
+            id: 1,
+            title: 'Aetheria Dashboard',
+            category: 'Web App',
+            teaser: 'An enterprise-grade AI analytics dashboard with real-time streaming data.',
+            description: 'Aetheria is an AI-powered data intelligence platform that parses petabytes of unstructured logs into intuitive, visual insights. Built for enterprise DevOps teams, it enables real-time anomaly detection and predictive scaling.\n\nThe platform features customizable workspaces, drag-and-drop widget layouts, and deep-dive forensic metrics. It serves as a central cockpit for multi-cloud infrastructure health, processing over 10 billion events daily with sub-millisecond latency.',
+            techStack: ['React', 'Tailwind CSS', 'Node.js', 'GraphQL', 'Apache Kafka', 'D3.js'],
+            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://aetheria.example.com'
+          },
+          {
+            id: 2,
+            title: 'Nova Brand Identity',
+            category: 'Branding',
+            teaser: 'A modern, eco-conscious brand system for a next-generation solar energy startup.',
+            description: 'Nova is a rebranding initiative for an innovative renewable energy provider. We designed a cohesive visual identity system centered around sustainability, clean lines, and energetic hues.\n\nThe project encompassed a custom logo mark, a comprehensive digital style guide, print collateral, and a sustainability impact report template. The new identity increased brand recall by 40% and successfully positioned Nova as the leading modern alternative in clean residential power.',
+            techStack: ['Figma', 'Adobe Illustrator', 'Brand Strategy', 'Typography', 'Print Design'],
+            image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://nova.example.com'
+          },
+          {
+            id: 3,
+            title: 'Luminary E-Commerce',
+            category: 'E-Commerce',
+            teaser: 'An immersive 3D shopping experience for high-end designer lighting and decor.',
+            description: 'Luminary redefines luxury retail by blending web-based 3D model previews with high-speed headless checkout. Customers can visually place designer light fixtures into interactive, pre-rendered 3D room scenes, adjusting height, color temperature, and brightness in real-time.\n\nThis frictionless journey led to a 28% increase in average order value and a significant drop in product return rates, demonstrating the power of interactive retail.',
+            techStack: ['Next.js', 'Three.js', 'Tailwind CSS', 'Shopify Hydrogen', 'Sanity CMS', 'WebGL'],
+            image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://luminary.example.com'
+          },
+          {
+            id: 4,
+            title: 'Vortex Mobile App',
+            category: 'Web App',
+            teaser: 'A multi-chain crypto wallet with intuitive portfolio management and gas-free swapping.',
+            description: 'Vortex is a secure, user-friendly mobile gateway to decentralized finance. It abstracts away the complexity of seed phrases and network switching through account abstraction, enabling biometrics-secured social recovery.\n\nUsers can track their asset portfolios across 12 blockchains, buy tokens with fiat currency, and swap assets instantly with automated routing for the best rates. The app achieved a 4.8-star rating on the App Store within months of launch.',
+            techStack: ['React Native', 'TypeScript', 'Ethers.js', 'Solidity', 'Tailwind CSS', 'Web3Auth'],
+            image: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://vortex.example.com'
+          },
+          {
+            id: 5,
+            title: 'Apex Landing Page',
+            category: 'Web Design',
+            teaser: 'A high-performance product landing page with stunning scroll-linked WebGL animations.',
+            description: 'Apex is a marketing landing page designed to launch a premium productivity suite. We combined scroll-bound visual narratives, interactive pricing calculators, and subtle micro-interactions to create a highly engaging story.\n\nThe layout utilizes Tailwind CSS\'s flexible spacing and smooth CSS transitions, resulting in sub-second load times and a conversion rate improvement of 35%. Optimized for speed, SEO, and accessibility across all user devices.',
+            techStack: ['HTML5', 'Tailwind CSS', 'Alpine.js', 'GSAP', 'Vite', 'SEO Optimization'],
+            image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://apex.example.com'
+          },
+          {
+            id: 6,
+            title: 'Chronos Watch Catalog',
+            category: 'Web Design',
+            teaser: 'An interactive, ultra-premium digital showcase for luxury mechanical timepieces.',
+            description: 'Chronos is an experiential catalog celebrating the art of luxury watchmaking. Visitors can interactively inspect the intricate inner gears, escapements, and complications of iconic movements through exploded-view 3D models.\n\nThe site includes educational stories detailing the history and craftsmanship behind each timepiece. The layout utilizes dark mode aesthetics, fine typography, and high-fidelity video loops to create a tactile sense of luxury.',
+            techStack: ['Three.js', 'Vanilla JS', 'GSAP', 'Tailwind CSS', 'Web Audio API', 'Blender'],
+            image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://chronos.example.com'
+          },
+          {
+            id: 7,
+            title: 'Synthetix Workflows',
+            category: 'AI Automation',
+            teaser: 'An enterprise-grade workflow execution engine driven by semantic routing and LLM logic.',
+            description: 'Synthetix is an autonomous operations platform that automates complex back-office workflows. By combining semantic text classification, Optical Character Recognition (OCR), and large language models, the platform parses incoming requests (emails, invoices, support tickets), extracts key data points, matches them to business guidelines, and executes API-level updates in Salesforce, Jira, and Slack.\n\nIt operates with a human-in-the-loop validation threshold, ensuring high accuracy while reducing human effort by 85%.',
+            techStack: ['Python', 'LangChain', 'FastAPI', 'PostgreSQL', 'Tailwind CSS', 'Redis'],
+            image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://synthetix.example.com'
+          },
+          {
+            id: 8,
+            title: 'Cognitive CRM Agent',
+            category: 'AI Agent',
+            teaser: 'A conversational customer agent that interprets user intent to negotiate and schedule tasks autonomously.',
+            description: 'Cognitive CRM is a goal-oriented AI agent designed to interact with clients directly via chat or voice. Unlike simple rule-based chatbots, this agent maintains long-term memory, parses nuanced customer intents, and uses tool callings to fetch live database records, calculate custom product discounts, and schedule booking slots on Google Calendar.\n\nThe agent utilizes retrieval-augmented generation (RAG) to reference internal company wikis and operates safely within predefined pricing boundaries.',
+            techStack: ['OpenAI API', 'Pinecone', 'Node.js', 'Alpine.js', 'Express', 'Tailwind CSS'],
+            image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
+            largeImage: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&q=80',
+            liveUrl: 'https://cognitive.example.com'
+          }
+        ],
+        filteredProjects() {
+          if (this.activeTab === 'All') return this.projects;
+          return this.projects.filter(p => p.category === this.activeTab);
+        },
+        openProject(project) {
+          this.selectedProject = project;
+          this.isModalOpen = true;
+          document.body.style.overflow = 'hidden';
+        },
+        closeProject() {
+          this.isModalOpen = false;
+          document.body.style.overflow = '';
+        }
+      }"
+      @keydown.escape.window="closeProject()">
+
+  <!-- Background Decorative Blobs -->
+  <div class="absolute top-1/4 left-0 w-96 h-96 bg-indigo-600/10 rounded-full bg-blob -translate-x-1/2 pointer-events-none"></div>
+  <div class="absolute top-2/3 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full bg-blob translate-x-1/3 pointer-events-none"></div>
+  <div class="absolute bottom-10 left-1/3 w-80 h-80 bg-fuchsia-600/5 rounded-full bg-blob pointer-events-none"></div>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-40 w-full glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+          V
+        </div>
+        <span class="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 group-hover:text-white transition-colors">
+          Vorqex Project
+        </span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Home</a>
+        <a href="index.html#services" class="text-slate-400 hover:text-white transition-colors">Services</a>
+        <!-- Active Link with visual indicator -->
+        <a href="projects.html" class="text-indigo-400 hover:text-indigo-300 transition-colors relative py-2">
+          Projects
+          <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]"></span>
+        </a>
+        <a href="index.html#about" class="text-slate-400 hover:text-white transition-colors">About</a>
+        <a href="index.html#contact" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden md:flex items-center">
+        <a href="index.html#contact" class="relative group overflow-hidden rounded-xl p-[1px] focus:outline-none">
+          <span class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl group-hover:opacity-100 transition-opacity"></span>
+          <span class="relative block px-6 py-2.5 rounded-[11px] bg-obsidian text-sm text-white font-semibold group-hover:bg-opacity-0 transition-all duration-300">
+            Let's Talk
+          </span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden" x-data="{ mobileOpen: false }">
+        <button @click="mobileOpen = !mobileOpen" class="text-slate-400 hover:text-white focus:outline-none p-2" aria-label="Toggle mobile menu">
+          <svg x-show="!mobileOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <svg x-show="mobileOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <!-- Mobile Dropdown -->
+        <div x-show="mobileOpen" @click.away="mobileOpen = false" x-transition class="absolute top-20 left-0 w-full bg-obsidian/95 border-b border-white/10 px-6 py-8 flex flex-col space-y-5 text-base font-medium z-50 backdrop-blur-lg md:hidden" x-cloak>
+          <a href="index.html" class="text-slate-400 hover:text-white transition-colors">Home</a>
+          <a href="index.html#services" class="text-slate-400 hover:text-white transition-colors">Services</a>
+          <a href="projects.html" class="text-indigo-400 font-semibold transition-colors">Projects</a>
+          <a href="index.html#about" class="text-slate-400 hover:text-white transition-colors">About Us</a>
+          <a href="index.html#contact" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+          <a href="index.html#contact" class="w-full text-center py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl text-white font-semibold">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <!-- HERO SECTION -->
+    <section class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+      <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-6">
+        Portfolio Showcase
+      </span>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
+        Projects that shape the digital future
+      </h1>
+      <p class="text-lg text-slate-400 leading-relaxed mb-10">
+        We collaborate with ambitious brands to construct robust, high-performance web products, branding systems, and interactive experiences.
+      </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <template x-for="tab in ['All', 'Web App', 'Branding', 'E-Commerce', 'Web Design', 'AI Automation', 'AI Agent']" :key="tab">
+          <button @click="activeTab = tab"
+                  :class="activeTab === tab 
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/25 border-transparent' 
+                    : 'bg-obsidian-light text-slate-400 hover:text-white hover:bg-obsidian-accent border-white/5'"
+                  class="px-5 py-2.5 rounded-full text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-obsidian"
+                  x-text="tab">
+          </button>
+        </template>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO GRID -->
+    <section class="mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <template x-for="project in filteredProjects()" :key="project.id">
+          <!-- Card Component -->
+          <article @click="openProject(project)" 
+                   class="glass-card glow-card rounded-2xl overflow-hidden cursor-pointer flex flex-col h-full group"
+                   x-transition:enter="transition ease-out duration-300"
+                   x-transition:enter-start="opacity-0 scale-95"
+                   x-transition:enter-end="opacity-100 scale-100">
+            <!-- Image Wrapper -->
+            <div class="relative aspect-[16/10] overflow-hidden bg-slate-900">
+              <img :src="project.image" :alt="project.title" 
+                   class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out" 
+                   loading="lazy">
+              <!-- Glass tag overlaid -->
+              <span class="absolute top-4 left-4 px-3 py-1 text-xs font-semibold rounded-full bg-slate-950/60 backdrop-blur-md border border-white/10 text-indigo-300"
+                    x-text="project.category">
+              </span>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6 flex flex-col flex-grow">
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors" x-text="project.title"></h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow" x-text="project.teaser"></p>
+              
+              <!-- Learn More Link -->
+              <div class="flex items-center text-xs font-semibold text-indigo-400 group-hover:text-indigo-300 transition-colors mt-auto">
+                <span>Explore Case Study</span>
+                <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+
+      <!-- Empty State if no project matches filter -->
+      <div x-show="filteredProjects().length === 0" class="text-center py-20 bg-obsidian-light/30 border border-white/5 rounded-2xl" x-cloak>
+        <svg class="w-12 h-12 mx-auto text-slate-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <p class="text-slate-500 font-medium text-lg">No projects found in this category.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING GLASSMOPHIC DETAILS MODAL -->
+  <div x-show="isModalOpen" 
+       class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto" 
+       style="display: none;"
+       x-cloak>
+    
+    <!-- Backdrop Overlay -->
+    <div x-show="isModalOpen"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-black/80 backdrop-blur-lg"
+         @click="closeProject()"></div>
+
+    <!-- Modal Box -->
+    <div x-show="isModalOpen"
+         x-transition:enter="transition ease-out duration-400"
+         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-250"
+         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+         x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+         class="relative max-w-4xl w-full bg-[#0F172A]/70 border border-white/10 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-2xl z-10 flex flex-col md:flex-row max-h-[85vh] md:max-h-[90vh]">
+      
+      <!-- Close Button (Floating in Top Right) -->
+      <button @click="closeProject()" 
+              class="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-slate-950/60 hover:bg-slate-900 border border-white/10 text-slate-400 hover:text-white transition-all shadow-md focus:outline-none"
+              aria-label="Close modal">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Left Column: Project Showcase Image -->
+      <div class="w-full md:w-1/2 relative bg-slate-900 min-h-[250px] md:min-h-full">
+        <img :src="selectedProject ? selectedProject.largeImage : ''" 
+             :alt="selectedProject ? selectedProject.title : ''"
+             class="absolute inset-0 w-full h-full object-cover">
+        <!-- Shadow gradient overlay to blend into dark backdrop on mobile -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent md:hidden"></div>
+      </div>
+
+      <!-- Right Column: Scrollable Details -->
+      <div class="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
+        <div class="mb-8">
+          <!-- Tag & Category -->
+          <div class="flex items-center gap-3 mb-4">
+            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"
+                  x-text="selectedProject ? selectedProject.category : ''">
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4" 
+              x-text="selectedProject ? selectedProject.title : ''">
+          </h2>
+
+          <!-- Detailed Case Study Description -->
+          <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+            <!-- Iterate paragraphs safely split by double newline -->
+            <template x-if="selectedProject">
+              <div>
+                <template x-for="paragraph in selectedProject.description.split('\n\n')">
+                  <p class="mb-4 last:mb-0" x-text="paragraph"></p>
+                </template>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div>
+          <!-- Technologies Used -->
+          <div class="mb-8">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Technologies Leveraged</h4>
+            <template x-if="selectedProject">
+              <div class="flex flex-wrap gap-2">
+                <template x-for="tech in selectedProject.techStack" :key="tech">
+                  <span class="px-3 py-1.5 text-xs font-medium bg-slate-900 border border-white/5 rounded-lg text-slate-300"
+                        x-text="tech">
+                  </span>
+                </template>
+              </div>
+            </template>
+          </div>
+
+          <!-- Action Button -->
+          <a :href="selectedProject ? selectedProject.liveUrl : '#'" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="inline-flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold rounded-2xl shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transform hover:-translate-y-0.5 transition-all text-sm sm:text-base group">
+            <span>Visit Live Site</span>
+            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLISHED FOOTER -->
+  <footer class="border-t border-white/5 bg-obsidian-light/30 relative z-10 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-12">
+        
+        <!-- Brand Pitch -->
+        <div class="md:col-span-2">
+          <a href="index.html" class="flex items-center space-x-3 mb-6 group">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+              V
+            </div>
+            <span class="text-lg font-bold tracking-wider text-white">Vorqex Project</span>
+          </a>
+          <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+            We are a creative engineering agency designing and building beautiful digital products. We partner with fast-growing startups and enterprises worldwide.
+          </p>
+        </div>
+
+        <!-- Navigation Links Column -->
+        <div>
+          <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Explore</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="index.html" class="text-slate-400 hover:text-white transition-colors">Home</a></li>
+            <li><a href="index.html#services" class="text-slate-400 hover:text-white transition-colors">Services</a></li>
+            <li><a href="projects.html" class="text-indigo-400 hover:text-indigo-300 transition-colors">Projects</a></li>
+            <li><a href="index.html#about" class="text-slate-400 hover:text-white transition-colors">About Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Column -->
+        <div>
+          <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Connect</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="mailto:hello@vorqex.com" class="text-slate-400 hover:text-white transition-colors">hello@vorqex.com</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-white transition-colors">LinkedIn</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Twitter (X)</a></li>
+            <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Dribbble</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Sub Footer / Legal -->
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>&copy; 2026 Vorqex Project. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
